@@ -4,6 +4,9 @@ const plumber      = require('gulp-plumber');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCss     = require('gulp-clean-css');
 
+// constants
+const CONSTANTS = require('../../shared/constants');
+
 // own
 const BuildReport = require('../lib/build-report');
 
@@ -26,7 +29,7 @@ const AUTOPREFIXER_OPTIONS = {
 
 function buildCSS(options, vfs, logger) {
 
-  var report = new BuildReport('build-html5:css');
+  var report = new BuildReport(CONSTANTS.TASK_NAME + ':css');
   report.start();
 
   return new Bluebird((resolve, reject) => {

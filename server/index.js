@@ -4,6 +4,14 @@ const util = require('util');
 // third-party
 const HBuilderServer = require('h-builder/server');
 
+// constants
+const CONSTANTS = require('../shared/constants');
+
+/**
+ * Server constructor
+ * @param {Object} options
+ *        - rabbitMQURI
+ */
 function HBuilderHTML5Server(options) {
   HBuilderServer.call(this, options);
 }
@@ -24,6 +32,6 @@ HBuilderHTML5Server.prototype.builderFn = require('./builder-fn');
  * 
  * @type {String}
  */
-HBuilderHTML5Server.prototype.taskName = 'build-html5';
+HBuilderHTML5Server.prototype.taskName = CONSTANTS.TASK_NAME;
 
 module.exports = HBuilderHTML5Server;

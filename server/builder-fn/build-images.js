@@ -3,12 +3,15 @@ const Bluebird = require('bluebird');
 const plumber  = require('gulp-plumber');
 const imagemin = require('gulp-imagemin');
 
+// constants
+const CONSTANTS = require('../../shared/constants');
+
 // own
 const BuildReport = require('../lib/build-report');
 
 function buildImages(options, vfs, logger) {
 
-  var report = new BuildReport('build-html5:images');
+  var report = new BuildReport(CONSTANTS.TASK_NAME + ':images');
   report.start();
 
   return new Bluebird((resolve, reject) => {

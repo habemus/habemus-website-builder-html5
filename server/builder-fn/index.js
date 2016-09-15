@@ -6,12 +6,15 @@ const buildJS     = require('./build-js');
 const buildCSS    = require('./build-css');
 const buildImages = require('./build-images');
 
+// constants
+const CONSTANTS = require('../../shared/constants');
+
 // own
 const BuildReport = require('../lib/build-report');
 
 function buildHTML5(options, vfs, logger) {
 
-  var overallReport = new BuildReport('build-html5');
+  var overallReport = new BuildReport(CONSTANTS.TASK_NAME);
   overallReport.start();
 
   return Bluebird.all([
