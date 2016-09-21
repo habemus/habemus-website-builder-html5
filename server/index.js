@@ -32,6 +32,6 @@ HBuilderHTML5Server.prototype.builderFn = require('./builder-fn');
  * 
  * @type {String}
  */
-HBuilderHTML5Server.prototype.taskName = CONSTANTS.TASK_NAME;
+HBuilderHTML5Server.prototype.name = CONSTANTS.TASK_NAME;
 
 module.exports = HBuilderHTML5Server;

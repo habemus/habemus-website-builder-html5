@@ -29,9 +29,7 @@ describe('HBuilderHTML5#builderFn(options, vfs, logger)', function () {
 
     this.timeout(60000);
 
-    var server = new HBuilderHTML5Server({
-      rabbitMQURI: aux.rabbitMQURI,
-    });
+    var server = new HBuilderHTML5Server();
 
     /**
      * Mock the vfs with a copy of the fixture to the temporary dir
