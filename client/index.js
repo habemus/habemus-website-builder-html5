@@ -21,6 +21,6 @@ util.inherits(HBuilderHTML5Client, HBuilderClient);
  * Task name should be fixed.
  * @type {String}
  */
-HBuilderHTML5Client.prototype.taskName = CONSTANTS.TASK_NAME;
+HBuilderHTML5Client.prototype.name = CONSTANTS.WORKER_NAME;
 
-module.exports =HBuilderHTML5Client;
+module.exports = HBuilderHTML5Client;
