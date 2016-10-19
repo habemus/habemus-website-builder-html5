@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@habemus/env-options": "^0.2.0",
     "bluebird": "^3.4.6",
     "gitignore-globs": "^0.1.1",
     "gulp-autoprefixer": "^3.1.1",
