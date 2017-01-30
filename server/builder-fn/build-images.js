@@ -15,7 +15,7 @@ function buildImages(options, vfs, logger) {
   report.start();
 
   return new Bluebird((resolve, reject) => {
-
+    resolve(report.finish());
     var imageGlobs = [
       '**/*.{png,PNG}',
       '**/*.{jpg,jpeg,JPG,JPEG}',
@@ -26,6 +26,8 @@ function buildImages(options, vfs, logger) {
       .pipe(plumber({
         errorHandler: function (err) {
           logger.error(err);
+          // upon error, stop compiling
+          this.emit('end');
         },
       }))
       .pipe(imagemin())
@@ -33,6 +35,11 @@ function buildImages(options, vfs, logger) {
       .on('end', () => {
         resolve(report.finish());
       });
+  })
+  .catch((err) => {
+    console.warn('ERROR', err);
+    // ignore errors
+    return err;
   });
 
 }

@@ -33,12 +33,18 @@ function buildCSS(options, vfs, logger) {
   report.start();
 
   return new Bluebird((resolve, reject) => {
-
-    var cssGlobs = ['**/*.css'];
-    var cssStream = vfs.src(cssGlobs)
+    var cssGlobs = [
+      '**/*.css',
+      '**/.habemus',
+      '**/.habemus/**',
+      '**/.git',
+      '**/.git/**'
+    ];
+    var cssStream = vfs.src(cssGlobs, { dot: true })
       .pipe(plumber({
         errorHandler: function (err) {
           logger.error(err);
+          this.emit('end');
         },
       }))
       .pipe(autoprefixer(AUTOPREFIXER_OPTIONS))
@@ -47,6 +53,11 @@ function buildCSS(options, vfs, logger) {
       .on('end', () => {
         resolve(report.finish());
       });
+  })
+  .catch((err) => {
+    console.warn('ERROR', err);
+    // ignore errors
+    return;
   });
 
 }

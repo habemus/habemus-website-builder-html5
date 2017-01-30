@@ -16,11 +16,18 @@ function buildJS(options, vfs, logger) {
   report.start();
 
   return new Bluebird((resolve, reject) => {
-    var jsGlobs = ['**/*.js'];
-    var jsStream = vfs.src(jsGlobs)
+    var jsGlobs = [
+      '**/*.js',
+      '**/.habemus',
+      '**/.habemus/**',
+      '**/.git',
+      '**/.git/**'
+    ];
+    var jsStream = vfs.src(jsGlobs, { dot: true })
       .pipe(plumber({
         errorHandler: function (err) {
           logger.error(err);
+          this.emit('end');
         },
       }))
       .pipe(stripDebug())
@@ -29,6 +36,11 @@ function buildJS(options, vfs, logger) {
       .on('end', () => {
         resolve(report.finish());
       });
+  })
+  .catch((err) => {
+    console.warn('ERROR', err);
+    // ignore errors
+    return;
   });
 
 }
