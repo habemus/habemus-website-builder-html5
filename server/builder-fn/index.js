@@ -17,6 +17,8 @@ function buildHTML5(options, vfs, logger) {
   var overallReport = new BuildReport(CONSTANTS.TASK_NAME);
   overallReport.start();
 
+  console.log('build started', options);
+
   return Bluebird.all([
     buildCSS(options, vfs, logger),
     buildJS(options, vfs, logger),
@@ -29,6 +31,8 @@ function buildHTML5(options, vfs, logger) {
     overallReport.css    = reports[0];
     overallReport.js     = reports[1];
     overallReport.images = reports[2];
+
+    console.log('build finished', options);
 
     return overallReport;
   });
