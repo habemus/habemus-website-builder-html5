@@ -15,7 +15,7 @@ const aux = require('../../aux');
 
 const HBuilderHTML5Server = require('../../../server');
 
-describe('HBuilderHTML5#builderFn(options, vfs, logger)', function () {
+describe('HBuilderHTML5#builderFn(options, vfs, logger) without web-io', function () {
 
   beforeEach(function () {
     return aux.setup();
@@ -44,6 +44,10 @@ describe('HBuilderHTML5#builderFn(options, vfs, logger)', function () {
       }
     );
 
+    /**
+     * Vfs Mock
+     * @type {Object}
+     */
     var vfs = {
       src: function (globs) {
         globs = Array.isArray(globs) ? globs : [globs];
@@ -61,6 +65,15 @@ describe('HBuilderHTML5#builderFn(options, vfs, logger)', function () {
         // console.log('vinylFs.dest:', destPath);
 
         return vinylFs.dest(destPath);
+      },
+
+      root: {
+        prependTo: function (str) {
+          return path.join(tmpWebsitePath, str);
+        },
+        value: function () {
+          return tmpWebsitePath;
+        }
       }
     }
 
@@ -123,4 +136,113 @@ describe('HBuilderHTML5#builderFn(options, vfs, logger)', function () {
       });
   });
 
+});
+
+describe('with web-io enabled', function () {
+
+  beforeEach(function () {
+    return aux.setup();
+  });
+
+  afterEach(function () {
+    return aux.teardown();
+  });
+
+  it('should execute web-io build', function () {
+
+    this.timeout(60000);
+
+    var server = new HBuilderHTML5Server();
+
+    /**
+     * Mock the vfs with a copy of the fixture to the temporary dir
+     */
+    var sourceWebsitePath = aux.fixturesPath + '/web-io-website';
+    var tmpWebsitePath = aux.tmpPath + '/web-io-website';
+    fse.copySync(
+      sourceWebsitePath,
+      tmpWebsitePath,
+      {
+        clobber: true
+      }
+    );
+
+    /**
+     * Vfs Mock
+     * @type {Object}
+     */
+    var vfs = {
+      src: function (globs) {
+        globs = Array.isArray(globs) ? globs : [globs];
+        globs = globs.map((glob) => {
+          return path.join(tmpWebsitePath, glob);
+        });
+
+        // console.log('vinylFs.src:', globs);
+
+        return vinylFs.src(globs);
+      },
+      dest: function (destPath) {
+        destPath = path.join(tmpWebsitePath, destPath);
+
+        // console.log('vinylFs.dest:', destPath);
+
+        return vinylFs.dest(destPath);
+      },
+
+      root: {
+        prependTo: function (str) {
+          return path.join(tmpWebsitePath, str);
+        },
+        value: function () {
+          return tmpWebsitePath;
+        }
+      }
+    }
+
+    /**
+     * Mock a logger object
+     * @type {Object}
+     */
+    var logger = {
+      log: function (d) {
+        console.log(d);
+      },
+      info: function (d) {
+        console.log(d);
+      },
+      warn: function (d) {
+        console.log(d);
+      },
+      error: function (d) {
+        console.log(d);
+      },
+    };
+
+    return server.builderFn({}, vfs, logger)
+      .then((buildReport) => {
+        // check that the files were effectively modified
+        return Bluebird.all([
+          _checksumFile(path.join(sourceWebsitePath, 'assets/js/main.js')),
+          _checksumFile(path.join(tmpWebsitePath, 'assets/js/main.js')),
+
+          _checksumFile(path.join(sourceWebsitePath, 'assets/css/main.css')),
+          _checksumFile(path.join(tmpWebsitePath, 'assets/css/main.css')),
+
+          _checksumFile(path.join(sourceWebsitePath, 'images/screen.jpg')),
+          _checksumFile(path.join(tmpWebsitePath, 'images/screen.jpg')),
+
+          // _checksumFile(path.join(sourceWebsitePath, 'posts.html')),
+          // _checksumFile(path.join(tmpWebsitePath, 'posts.html')),
+        ]);
+      })
+      .then((results) => {
+
+        results[0].should.not.eql(results[1]);
+        results[2].should.not.eql(results[3]);
+        results[4].should.not.eql(results[5]);
+        // results[6].should.not.eql(results[7]);
+
+      });
+  });
 });

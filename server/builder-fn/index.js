@@ -5,6 +5,7 @@ const Bluebird = require('bluebird');
 const buildJS     = require('./build-js');
 const buildCSS    = require('./build-css');
 const buildImages = require('./build-images');
+const buildWebIO  = require('./build-web-io');
 
 // constants
 const CONSTANTS = require('../../shared/constants');
@@ -22,7 +23,8 @@ function buildHTML5(options, vfs, logger) {
   return Bluebird.all([
     buildCSS(options, vfs, logger),
     buildJS(options, vfs, logger),
-    buildImages(options, vfs, logger)
+    buildImages(options, vfs, logger),
+    buildWebIO(options, vfs, logger),
   ])
   .then((reports) => {
 
@@ -31,6 +33,7 @@ function buildHTML5(options, vfs, logger) {
     overallReport.css    = reports[0];
     overallReport.js     = reports[1];
     overallReport.images = reports[2];
+    overallReport.webIO  = reports[3];
 
     console.log('build finished', options);
 

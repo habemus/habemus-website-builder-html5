@@ -59,7 +59,7 @@ function buildJS(options, vfs, logger) {
       });
   })
   .catch((err) => {
-    console.warn('ERROR', err);
+    console.warn('build-js error', err);
     // ignore errors
     return;
   });

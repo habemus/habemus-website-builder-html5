@@ -61,7 +61,7 @@ function buildCSS(options, vfs, logger) {
       });
   })
   .catch((err) => {
-    console.warn('ERROR', err);
+    console.warn('build-css error', err);
     // ignore errors
     return;
   });

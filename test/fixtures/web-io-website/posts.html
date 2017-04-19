@@ -1,0 +1,21 @@
+---
+posts@: /posts/*.md
+---
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+  <h2>posts</h2>
+
+  <ul>
+  {% for post in current.posts %}
+    <li>
+      <a href="{{ post.url }}">post.title</a>
+    </li>
+  {% endfor %}
+  </ul>
+
+</body>
+</html>

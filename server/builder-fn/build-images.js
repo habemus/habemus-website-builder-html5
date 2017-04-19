@@ -36,7 +36,7 @@ function buildImages(options, vfs, logger) {
       });
   })
   .catch((err) => {
-    console.warn('ERROR', err);
+    console.warn('build-images error', err);
     // ignore errors
     return;
   });
