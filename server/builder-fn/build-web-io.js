@@ -67,7 +67,7 @@ function buildWebIO(options, vfs, logger) {
               },
             }))
             .pipe(webIO({
-              // TODO: document this API at h-builder/server/lib/h-vinyl-fs.js
+              // TODO: document this API at habemus-website-builder-base/server/lib/h-vinyl-fs.js
               fsRoot: vfs.root.value(),
             }))
             .pipe(vfs.dest('.'))

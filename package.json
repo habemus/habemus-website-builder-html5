@@ -1,5 +1,5 @@
 {
-  "name": "h-builder-html5",
+  "name": "habemus-website-builder-html5",
   "version": "2.0.0",
   "description": "",
   "main": "index.js",
@@ -21,9 +21,9 @@
     "gulp-plumber": "^1.1.0",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^2.0.0",
-    "h-builder": "git+ssh://git@bitbucket.org/habemus-tutti/h-builder.git",
+    "habemus-website-builder-base": "git+https://github.com/habemus/habemus-website-builder-base.git",
     "through2": "^2.0.3",
-    "web-io": "git+ssh://git@github.com/habemus/web-io.git"
+    "web-io": "git+https://github.com/habemus/web-io.git"
   },
   "devDependencies": {
     "checksum": "^0.1.1",

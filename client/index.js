@@ -2,7 +2,7 @@
 const util = require('util');
 
 // third-party
-const HBuilderClient = require('h-builder/client');
+const HabemusWebsiteBuilderClient = require('habemus-website-builder-base/client');
 
 // constants
 const CONSTANTS = require('../shared/constants');
@@ -13,9 +13,9 @@ const CONSTANTS = require('../shared/constants');
  *        - rabbitMQURI: String
  */
 function HBuilderHTML5Client(options) {
-  HBuilderClient.call(this, options);
+  HabemusWebsiteBuilderClient.call(this, options);
 }
-util.inherits(HBuilderHTML5Client, HBuilderClient);
+util.inherits(HBuilderHTML5Client, HabemusWebsiteBuilderClient);
 
 /**
  * Task name should be fixed.

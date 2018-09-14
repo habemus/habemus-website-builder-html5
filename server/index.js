@@ -2,7 +2,7 @@
 const util = require('util');
 
 // third-party
-const HBuilderServer = require('h-builder/server');
+const WebsiteBuilderServer = require('habemus-website-builder-base/server');
 
 // constants
 const CONSTANTS = require('../shared/constants');
@@ -13,9 +13,9 @@ const CONSTANTS = require('../shared/constants');
  *        - rabbitMQURI
  */
 function HBuilderHTML5Server(options) {
-  HBuilderServer.call(this, options);
+  WebsiteBuilderServer.call(this, options);
 }
-util.inherits(HBuilderHTML5Server, HBuilderServer);
+util.inherits(HBuilderHTML5Server, WebsiteBuilderServer);
 
 /**
  * Define the build function in the prototype.
